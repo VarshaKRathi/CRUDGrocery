@@ -36,22 +36,20 @@ public class GroceryServiceImplTest {
 	
 
 	@Test
-	public final void testUpdateGroceryItem() {
-		
-	}
-
-	@Test
 	public final void testReadGroceryItem() {
 		Grocery gs = new Grocery();
+		
 		gs.setItemId(7);
 		gs.setItemName("Test");
 		gs.setCategory("food");
 		gs.setItemPrice(5);
 		gs.setItemQty(1);
-		gs = repo.save(gs);
+		
 	    Iterable<Grocery> gs1 = repo.findAll();
-	
-	   
+	  
+	    assertEquals("food", gs.getCategory());
+	 
+	    assertEquals("Test", gs.getItemName());
 	}
 
 	@Test
@@ -71,8 +69,16 @@ public class GroceryServiceImplTest {
 	@Test
 	public final void testGetGroceryItemByCategory() {
 		String category = "food";
-	
+		gs.setItemId(7);
+		gs.setItemName("Test");
+		gs.setCategory("food");
+		gs.setItemPrice(5);
+		gs.setItemQty(1);
+		
+		repo.save(gs);
 		List<Grocery> grocery = repo.findByCategory(category);	
+		grocery.add(gs);
+	    when(repo.findByCategory(category)).thenReturn(grocery);
 		List groceryCategoryList = new ArrayList();
 
 		groceryCategoryList.add(grocery);
